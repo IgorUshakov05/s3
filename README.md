@@ -12,7 +12,7 @@
 Создайте файл .env в корне проекта и укажите в нем переменные:
   ```bash
   PORT=3001
-  API_KEY=your_api_key_here```
+  API_KEY=your_api_key_here
 
 3. **Запуск сервера**:
     ```bash
