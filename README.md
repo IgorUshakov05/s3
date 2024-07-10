@@ -11,13 +11,15 @@
 
 2. **Настройка переменных окружения**:
 Создайте файл .env в корне проекта и укажите в нем переменные:
-  ``bash
+  ```bash
   PORT=3001
-  API_KEY=your_api_key_here``
+  API_KEY=your_api_key_here
+   ```
 
 4. **Запуск сервера**:
-    ```bash
-  npm start ```
+ ```bash
+  npm start
+  ```
 # Особенности
 1. **Загрузка изображений: Поддерживаются изображения в форматах JPEG и PNG.**
 2. **Обработка изображений: Аватары обрезаются до квадратной формы и изменяются до размера 250x250 пикселей. Логотипы компаний также обрезаются и изменяются до размера 400x400 пикселей.**
@@ -32,17 +34,17 @@ fetch("http://localhost:3001/upload/avatar", {
     Authorization: "Bearer your_api_key_here",
   },
   body: formData,
-});```
+});``
 
 **Загрузка логотипа компании**
 - ***POST /upload/company***
-```fetch("http://localhost:3001/upload/company", {
+``fetch("http://localhost:3001/upload/company", {
   method: "POST",
   headers: {
     Authorization: "Bearer your_api_key_here",
   },
   body: formData,
-});```
+});``
 **Обработка ошибок**
 - Если загружаемый файл не соответствует формату JPEG или PNG, сервер вернет статус 400 и сообщение об ошибке.
 Неправильный API ключ вызовет ошибку с кодом 403.
