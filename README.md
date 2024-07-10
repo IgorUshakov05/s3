@@ -42,7 +42,6 @@ fetch("http://localhost:3001/upload/avatar", {
 
 **Загрузка логотипа компании**
 - ***POST /upload/company***
-- 
 ```
 fetch("http://localhost:3001/upload/company", {
   method: "POST",
@@ -55,7 +54,6 @@ fetch("http://localhost:3001/upload/company", {
 
 **Получение аватара**
 - ***GET /avatar/:imageName***
-- 
 ```
 fetch("http://localhost:3001/avatar/:imageName", {
   method: "GET",
@@ -69,8 +67,7 @@ fetch("http://localhost:3001/avatar/:imageName", {
 ```
 
 **Получение логотипа компании**
-- ***GET /company/:imageName***
-- 
+- ***GET /company/:imageName**
 ```
 fetch("http://localhost:3001/company/:imageName", {
   method: "GET",
