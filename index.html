@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="avatarForm" method="post" enctype="multipart/form-data">
+      <input
+        type="file"
+        accept="image/png, image/jpeg"
+        name="avatar"
+        id="avatar"
+        placeholder="Аватар"
+      />
+      <button type="submit">Отправить</button>
+    </form>
+
+    <form id="companyForm" method="post" enctype="multipart/form-data">
+      <input
+        type="file"
+        name="company"
+        id="company"
+        accept="image/png, image/jpeg"
+        placeholder="Компания"
+      />
+      <button type="submit">Отправить</button>
+    </form>
+  </body>
+
+  <script>
+    const formAvatar = document.getElementById("avatarForm");
+    const formLogo = document.getElementById("companyForm");
+
+    const sendAvatar = async () => {
+      const file = document.getElementById("avatar").files[0];
+
+      if (
+        !file ||
+        !(
+          file.type === "image/jpeg" ||
+          file.type === "image/png"
+        )
+      ) {
+        alert("Please select an image file.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("avatar", file);
+
+      try {
+        const response = await fetch("http://localhost:3001/upload/avatar", {
+          method: "POST",
+          headers: {
+            Authorization: "ILOVEPORN"
+          },
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error("Image upload failed.");
+        }
+
+        const data = await response.json();
+        console.log("Image uploaded successfully:", data);
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        alert("Error uploading image. Please try again.");
+      }
+    };
+
+    const sendLogo = async () => {
+      const file = document.getElementById("company").files[0];
+      if (
+        !file ||
+        !(
+          file.type === "image/jpeg" ||
+          file.type === "image/png"
+        )
+      ) {
+        alert("Please select an image file.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("company", file);
+
+      try {
+        const response = await fetch("http://localhost:3001/upload/company", {
+          method: "POST",
+          headers: {
+            Authorization: "ILOVEPORN"
+          },
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error("Image upload failed.");
+        }
+
+        const data = await response.json();
+        console.log("Image uploaded successfully:", data);
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        alert("Error uploading image. Please try again.");
+      }
+    };
+
+    formAvatar.addEventListener("submit", (event) => {
+      event.preventDefault(); // Prevent default form submission
+      console.log("Form submission prevented.");
+      sendAvatar(); // Call the send function
+    });
+    formLogo.addEventListener("submit", (event) => {
+      event.preventDefault(); // Prevent default form submission
+      console.log("Form submission prevented.");
+      sendLogo(); // Call the send function
+    });
+  </script>
+</html>
