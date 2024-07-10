@@ -27,24 +27,26 @@
 4. **Кросс-доменные запросы (CORS): Настроен для разрешения доступа с указанных источников.**
 **Загрузка аватар**
 - ***POST /upload/avatar***
-``javascript
+```javascript
 fetch("http://localhost:3001/upload/avatar", {
   method: "POST",
   headers: {
     Authorization: "Bearer your_api_key_here",
   },
   body: formData,
-});``
+});
+```
 
 **Загрузка логотипа компании**
 - ***POST /upload/company***
-``fetch("http://localhost:3001/upload/company", {
+```fetch("http://localhost:3001/upload/company", {
   method: "POST",
   headers: {
     Authorization: "Bearer your_api_key_here",
   },
   body: formData,
-});``
+});
+```
 **Обработка ошибок**
 - Если загружаемый файл не соответствует формату JPEG или PNG, сервер вернет статус 400 и сообщение об ошибке.
 Неправильный API ключ вызовет ошибку с кодом 403.
