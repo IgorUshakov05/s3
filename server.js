@@ -30,7 +30,10 @@ if (!fs.existsSync(storagePath)) {
 }
 
 app.use(getAvatar, getCompany, setCompany, setAvatar);
-
+app.get('/', (req, res) => {
+  const indexPath = path.join(__dirname, 'dist', 'index.html');
+  res.sendFile(indexPath);
+});
 app.all("*", (req, res) => {
   res.redirect("https://webhunt.ru");
 });
