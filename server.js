@@ -6,6 +6,7 @@ const app = express();
 const path = require("path");
 const getAvatar = require("./routers/getIcons/avatar");
 const getCompany = require("./routers/getIcons/company");
+const setDocument = require("./routers/setDocuments/documents");
 const setAvatar = require("./routers/setIcons/avatar");
 const setCompany = require("./routers/setIcons/company");
 
@@ -15,6 +16,7 @@ app.use(cors({
     'http://localhost:3000',
     'http://localhost:5500',
     'null',
+    "https://q72v1zh5-3000.euw.devtunnels.ms",
     'file://'
   ],
   methods: ['GET', 'POST'],
@@ -29,7 +31,7 @@ if (!fs.existsSync(storagePath)) {
   fs.mkdirSync(storagePath, { recursive: true });
 }
 
-app.use(getAvatar, getCompany, setCompany, setAvatar);
+app.use(getAvatar, getCompany, setCompany, setAvatar, setDocument);
 app.get('/', (req, res) => {
   const indexPath = path.join(__dirname, 'dist', 'index.html');
   res.sendFile(indexPath);
