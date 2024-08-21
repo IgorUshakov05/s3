@@ -10,17 +10,19 @@ const setDocument = require("./routers/setDocuments/documents");
 const setAvatar = require("./routers/setIcons/avatar");
 const setCompany = require("./routers/setIcons/company");
 
-app.use(cors({
-  origin: [
-    'https://webhunt.ru',
-    'http://localhost:3000',
-    'http://localhost:5500',
-    'null',
-    "https://q72v1zh5-3000.euw.devtunnels.ms",
-    'file://'
-  ],
-  methods: ['GET', 'POST'],
-}));
+app.use(
+  cors({
+    origin: [
+      "https://webhunt.ru",
+      "http://localhost:3000",
+      "http://localhost:5500",
+      "null",
+      "https://q72v1zh5-3000.euw.devtunnels.ms",
+      "file://",
+    ],
+    methods: ["GET", "POST"],
+  })
+);
 const storagePath = path.join(__dirname, "storage");
 app.use((req,res,next) => {
   let way = req.headers.origin
