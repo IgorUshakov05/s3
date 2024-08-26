@@ -3,29 +3,43 @@ let router = Router();
 const path = require("path");
 const fs = require("fs");
 
-router.delete("/documtns/remove/:imageDocs", (req, res) => {
-  const imageDocs = req.params.imageDocs;
-
-  if (!/^[a-zA-Z0-9_\.\-]+$/.test(imageDocs)) {
-    return res.status(400).json({ message: "Некорректное имя файла." });
+router.delete("/documtns/remove", (req, res) => {
+  const files = req.body.files;
+  console.log(files);
+  if (
+    !Array.isArray(files) ||
+    files.some((file) => !/^[a-zA-Z0-9_\.\-]+$/.test(file))
+  ) {
+    return res.status(400).json({ message: "Некорректные имена файлов." });
   }
 
-  const storagePath = path.join(__dirname, "..", "..", "storage");
-  const file = path.join(storagePath, "pdfs", imageDocs);
+  const storagePath = path.join(__dirname, "..", "..", "storage", "pdfs");
+  let errors = [];
 
-  // Проверка существования файла
-  if (!fs.existsSync(file)) {
-    return res.status(404).json({ message: "Файл не найден." });
+  files.forEach((file) => {
+    const filePath = path.join(storagePath, file);
+
+    // Проверка существования файла
+    if (fs.existsSync(filePath)) {
+      try {
+        // Удаление файла
+        fs.unlinkSync(filePath);
+      } catch (error) {
+        console.error(`Ошибка при удалении файла ${file}:`, error);
+        errors.push({ file, error: "Ошибка при удалении файла" });
+      }
+    } else {
+      errors.push({ file, error: "Файл не найден" });
+    }
+  });
+
+  if (errors.length > 0) {
+    return res
+      .status(500)
+      .json({ message: "Некоторые файлы не были удалены.", errors });
   }
 
-  try {
-    // Удаление файла
-    fs.unlinkSync(file);
-    return res.json({ message: "Файл успешно удален." });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: "Ошибка при удалении файла." });
-  }
+  return res.json({ message: "Все файлы успешно удалены." });
 });
 
 module.exports = router;

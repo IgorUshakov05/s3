@@ -9,6 +9,7 @@ const getCompany = require("./routers/getIcons/company");
 const setDocument = require("./routers/Documents/documents");
 const downloadDocs = require("./routers/Documents/documentsGet");
 const removeDocs = require("./routers/Documents/remove");
+const removeAvatarCompany = require("./routers/getIcons/remove");
 const setAvatar = require("./routers/setIcons/avatar");
 const setCompany = require("./routers/setIcons/company");
 
@@ -17,9 +18,10 @@ app.use(
     origin: [
       "https://webhunt.ru",
       "http://localhost:3000",
+      "http://localhost:3002",
       "http://localhost:5500",
       "null",
-      "https://2228-85-140-161-118.ngrok-free.app",
+      "https://cc3c-85-140-163-32.ngrok-free.app",
       "https://q72v1zh5-3000.euw.devtunnels.ms",
       "file://",
     ],
@@ -33,6 +35,7 @@ app.use((req, res, next) => {
   console.log(way);
   next();
 });
+app.use(express.json());
 if (!fs.existsSync(storagePath)) {
   fs.mkdirSync(storagePath, { recursive: true });
 }
@@ -41,6 +44,7 @@ app.use(
   getAvatar,
   getCompany,
   setCompany,
+  removeAvatarCompany,
   downloadDocs,
   setAvatar,
   removeDocs,

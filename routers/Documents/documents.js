@@ -84,7 +84,7 @@ router.post("/upload/pdfs", uploadPDF.any(), (req, res) => {
   const filePaths = req.files.reduce((acc, file) => {
     console.log(file);
     const fieldName = file.fieldname; // Имя поля формы, используемое для ключа
-    acc[fieldName] = `${process.env.SERVER}/pdfs/${file.filename}`;
+    acc[fieldName] = `${process.env.SERVER}/documtns/${file.filename}`;
     return acc;
   }, {});
 
