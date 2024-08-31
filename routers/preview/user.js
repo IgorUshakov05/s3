@@ -173,7 +173,7 @@ router.get("/user", async (req, res) => {
         </div>
         <div class="name">
           <h1>${name} ${lastName}</h1>
-          <h2>${special}</h2>
+          <h2>${!special? 'HR' : special}</h2>
         </div>
         <div class="location">
           <svg
