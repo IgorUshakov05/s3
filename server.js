@@ -13,6 +13,7 @@ const removeAvatarCompany = require("./routers/getIcons/remove");
 const setAvatar = require("./routers/setIcons/avatar");
 const setCompany = require("./routers/setIcons/company");
 const userPreview = require("./routers/preview/user");
+const companyPreview = require("./routers/preview/company");
 app.use(
   cors({
     origin: [
@@ -29,7 +30,7 @@ app.use(
   })
 );
 
-app.use("/preview", userPreview);
+app.use("/preview", userPreview, companyPreview);
 const storagePath = path.join(__dirname, "storage");
 app.use((req, res, next) => {
   let way = req.headers.origin;
