@@ -12,7 +12,7 @@ const removeDocs = require("./routers/Documents/remove");
 const removeAvatarCompany = require("./routers/getIcons/remove");
 const setAvatar = require("./routers/setIcons/avatar");
 const setCompany = require("./routers/setIcons/company");
-
+const userPreview = require("./routers/preview/user");
 app.use(
   cors({
     origin: [
@@ -21,7 +21,7 @@ app.use(
       "http://localhost:3002",
       "http://localhost:5500",
       "null",
-      "https://cc3c-85-140-163-32.ngrok-free.app",
+      "https://bb15-85-140-163-20.ngrok-free.app",
       "https://q72v1zh5-3000.euw.devtunnels.ms",
       "file://",
     ],
@@ -29,6 +29,7 @@ app.use(
   })
 );
 
+app.use("/preview", userPreview);
 const storagePath = path.join(__dirname, "storage");
 app.use((req, res, next) => {
   let way = req.headers.origin;

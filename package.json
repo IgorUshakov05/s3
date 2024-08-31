@@ -13,8 +13,12 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "html-to-image": "^1.11.11",
     "jimp": "^0.22.12",
+    "jsdom": "^25.0.0",
     "multer": "^1.4.5-lts.1",
+    "puppeteer": "^23.2.1",
+    "tmp": "^0.2.3",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
