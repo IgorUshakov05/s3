@@ -12,6 +12,7 @@ const removeDocs = require("./routers/Documents/remove");
 const removeAvatarCompany = require("./routers/getIcons/remove");
 const setAvatar = require("./routers/setIcons/avatar");
 const setCompany = require("./routers/setIcons/company");
+const vacancyPreview = require("./routers/preview/vacancy");
 const userPreview = require("./routers/preview/user");
 const companyPreview = require("./routers/preview/company");
 app.use(
@@ -30,7 +31,7 @@ app.use(
   })
 );
 
-app.use("/preview", userPreview, companyPreview);
+app.use("/preview", userPreview, companyPreview, vacancyPreview);
 const storagePath = path.join(__dirname, "storage");
 app.use((req, res, next) => {
   let way = req.headers.origin;
