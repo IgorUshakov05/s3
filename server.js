@@ -23,8 +23,7 @@ app.use(
       "http://localhost:3002",
       "http://localhost:5500",
       "null",
-      "https://bb15-85-140-163-20.ngrok-free.app",
-      "https://q72v1zh5-3000.euw.devtunnels.ms",
+      "https://e13e-85-140-160-116.ngrok-free.app",
       "file://",
     ],
     methods: ["GET", "POST", "DELETE", "PUT", "PATCH", "OPTIONS"], // Разрешите все необходимые методы (POST, PUT, DELETE)
