@@ -346,7 +346,9 @@ router.get("/vacancy", async (req, res) => {
 </html>
 `;
   try {
-    const browser = await puppeteer.launch();
+const browser = await puppeteer.launch({
+  args: ["--no-sandbox", "--disable-setuid-sandbox"],
+});
     const page = await browser.newPage();
     await page.setContent(htmlContent, { waitUntil: "networkidle0" });
     await page.setViewport({ width: 1200, height: 630, deviceScaleFactor: 1 });

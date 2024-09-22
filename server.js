@@ -20,11 +20,7 @@ app.use(
     origin: [
       "https://webhunt.ru",
       "http://localhost:3000",
-      "http://localhost:3002",
-      "http://localhost:5500",
-      "null",
-      "https://e13e-85-140-160-116.ngrok-free.app",
-      "file://",
+      "https://cd0d-85-140-161-84.ngrok-free.app",
     ],
     methods: ["GET", "POST", "DELETE", "PUT", "PATCH", "OPTIONS"], // Разрешите все необходимые методы (POST, PUT, DELETE)
   })
