@@ -301,7 +301,7 @@ router.get("/company", async (req, res) => {
             />
           </svg>
 
-          <p>${location}</p>
+          <p>${location || "Неизвестно"}</p>
         </div>
         <div class="name">
           <h1>${title}</h1>
