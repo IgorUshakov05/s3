@@ -1,86 +1,112 @@
-# Добро пожаловать в Хранилище изображений - S3 by WebHunt 
+# **Хранилище файлов S3 by WebHunt**
 
-Это веб-приложение для загрузки и обработки изображений, предназначенное для использования разработчиками для загрузки аватар и логотипов компаний.
+Веб-приложение для управления файлами (загрузка, хранение, удаление) различных форматов. Разработано для упрощения работы с файлами, включая PDF, изображения и документы, с защитой через авторизацию.
 
-## Установка и настройка
+---
 
-1. **Установка зависимостей**:
+## **Особенности приложения**
+
+- **Загрузка файлов**: Поддержка различных форматов (PDF, изображения, текст, документы).
+- **Удаление файлов**: Удобное удаление через API с проверкой существования.
+- **Авторизация**: API защищено с использованием ключа авторизации.
+- **Фильтрация файлов**: Проверка размера (до 20 МБ) и поддерживаемого формата.
+- **Кросс-доменные запросы (CORS)**: Настроен для внешних запросов.
+
+---
+
+## **Установка и настройка**
+
+1. **Клонирование проекта**
+   ```bash
+   git clone https://github.com/your-repo/s3-file-storage.git
+   cd s3-file-storage
+Установка зависимостей
+
 ```bash
 npm install
 ```
+Настройка переменных окружения Создайте файл .env в корне проекта и укажите:
 
-2. **Настройка переменных окружения**:
-Создайте файл .env в корне проекта и укажите в нем переменные:
 ```bash
 PORT=3001
 API_KEY=your_api_key_here
+SERVER=http://localhost:3001
 ```
+2.  **Запуск сервера**
 
-4. **Запуск сервера**:
 ```bash
 npm start
 ```
-# Особенности
-1. **Загрузка изображений: Поддерживаются изображения в форматах JPEG и PNG.**
-2. **Обработка изображений: Аватары обрезаются до квадратной формы и изменяются до размера 250x250 пикселей. Логотипы компаний также обрезаются и изменяются до размера 400x400 пикселей.**
-3. **Для изображения при загрузке на сервер генерируется имя череp [UUID](https://www.npmjs.com/package/uuid)**
-4. **Авторизация: Защита доступа к API с использованием ключа авторизации.**
-5. **Кросс-доменные запросы (CORS): Настроен для разрешения доступа с указанных источников.**
-   
-**Загрузка аватар**
-- ***POST /upload/avatar***
-```
-javascript
-fetch("http://localhost:3001/upload/avatar", {
+API Endpoints
+1. **Загрузка файлов**
+URL: POST /upload/files
+Описание: Позволяет загрузить файлы на сервер.
+Заголовки:
+Authorization: Bearer your_api_key_here
+Тело запроса: FormData, содержащий файлы.
+Пример:
+```javascript
+const formData = new FormData();
+formData.append("file1", file1); // Замените file1 на ваш файл
+formData.append("file2", file2);
+
+fetch("http://localhost:3001/upload/files", {
   method: "POST",
   headers: {
     Authorization: "Bearer your_api_key_here",
   },
   body: formData,
-});
+})
+  .then((response) => response.json())
+  .then((data) => console.log("Файлы успешно загружены:", data))
+  .catch((error) => console.error("Ошибка при загрузке:", error));
 ```
-
-**Загрузка логотипа компании**
-- ***POST /upload/company***
+2. **Удаление файлов**
+URL: DELETE /documents/remove
+Описание: Удаляет файлы из хранилища.
+Заголовки:
+Authorization: Bearer your_api_key_here
+Тело запроса: JSON массив с именами файлов.
+```json
+{
+  "files": ["file1.pdf", "file2.png"]
+}
 ```
-fetch("http://localhost:3001/upload/company", {
-  method: "POST",
+Пример:
+```javascript
+fetch("http://localhost:3001/documents/remove", {
+  method: "DELETE",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer your_api_key_here",
+  },
+  body: JSON.stringify({ files: ["file1.pdf", "file2.png"] }),
+})
+  .then((response) => response.json())
+  .then((data) => console.log("Файлы успешно удалены:", data))
+  .catch((error) => console.error("Ошибка при удалении:", error));
+```
+3. **Получение файла**
+URL: GET /files/:fileName
+Описание: Позволяет скачать файл по его имени.
+Пример:
+```javascript
+fetch("http://localhost:3001/files/example.pdf", {
+  method: "GET",
   headers: {
     Authorization: "Bearer your_api_key_here",
   },
-  body: formData,
-});
-```
-
-**Получение аватара**
-- ***GET /avatar/:imageName***
-```
-fetch("http://localhost:3001/avatar/:imageName", {
-  method: "GET",
 })
-  .then(response => {
-    // Обработка полученного изображения
+  .then((response) => response.blob())
+  .then((blob) => {
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.style.display = "none";
+    a.href = url;
+    a.download = "example.pdf"; // Имя сохраняемого файла
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
   })
-  .catch(error => {
-    console.error('Ошибка при получении изображения:', error);
-  });
+  .catch((error) => console.error("Ошибка при скачивании:", error));
 ```
-
-**Получение логотипа компании**
-- ***GET /company/:imageName**
-```
-fetch("http://localhost:3001/company/:imageName", {
-  method: "GET",
-})
-  .then(response => {
-    // Обработка полученного изображения
-  })
-  .catch(error => {
-    console.error('Ошибка при получении изображения:', error);
-  });
-```
-
-**Обработка ошибок**
-- Если загружаемый файл не соответствует формату JPEG или PNG, сервер вернет статус 400 и сообщение об ошибке.
-Неправильный API ключ вызовет ошибку с кодом 403.
-# Автор: [Игорь Ушаков](https://github.com/IgorUshakov05) 
