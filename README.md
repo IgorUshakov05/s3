@@ -17,30 +17,23 @@
 ## **Установка и настройка**
 
 1. **Клонирование проекта**
-
    ```bash
-   git clone https://github.com/igorushakov05/s3.git
+   git clone https://github.com/IgorUshakov05/s3.git
    cd s3-file-storage
    ```
-
-2. **Установка зависимостей**
-
+   Установка зависимостей:
    ```bash
    npm install
    ```
-
-3. **Настройка переменных окружения**
-
+   Настройка переменных окружения:
    Создайте файл `.env` в корне проекта и укажите:
-
    ```bash
    PORT=3001
    API_KEY=your_api_key_here
    SERVER=http://localhost:3001
    ```
 
-4. **Запуск сервера**
-
+2. **Запуск сервера**
    ```bash
    npm start
    ```
@@ -49,91 +42,83 @@
 
 ## **API Endpoints**
 
-1. **Загрузка файлов**
+### 1. **Получение изображения компании**
+- **URL**: `GET /company/:imageName`
+- **Описание**: Получение изображения компании по имени файла.
+- **Заголовки**:
+  - `Authorization: Bearer your_api_key_here`
+  
+---
 
-   - **URL**: `POST /upload/files`
-   - **Описание**: Позволяет загрузить файлы на сервер.
-   - **Заголовки**:
-     - `Authorization`: `Bearer your_api_key_here`
-   - **Тело запроса**: `FormData`, содержащий файлы.
+### 2. **Получение аватара**
+- **URL**: `GET /avatar/:imageName`
+- **Описание**: Получение аватара по имени файла.
+- **Заголовки**:
+  - `Authorization: Bearer your_api_key_here`
 
-   Пример:
+---
 
-   ```javascript
-   const formData = new FormData();
-   formData.append("file1", file1); // Замените file1 на ваш файл
-   formData.append("file2", file2);
+### 3. **Загрузка изображения компании**
+- **URL**: `POST /upload/company`
+- **Описание**: Загрузка изображения компании.
+- **Заголовки**:
+  - `Authorization: Bearer your_api_key_here`
+- **Тело запроса**: `FormData`, содержащий файл.
+  
+---
 
-   fetch("http://localhost:3001/upload/files", {
-     method: "POST",
-     headers: {
-       Authorization: "Bearer your_api_key_here",
-     },
-     body: formData,
-   })
-     .then((response) => response.json())
-     .then((data) => console.log("Файлы успешно загружены:", data))
-     .catch((error) => console.error("Ошибка при загрузке:", error));
-   ```
+### 4. **Удаление аватара компании**
+- **URL**: `DELETE /avatarCompany/remove`
+- **Описание**: Удаляет аватар компании.
+- **Заголовки**:
+  - `Authorization: Bearer your_api_key_here`
+- **Тело запроса**: Нет (удаляется по имени файла).
 
-2. **Удаление файлов**
+---
 
-   - **URL**: `DELETE /documents/remove`
-   - **Описание**: Удаляет файлы из хранилища.
-   - **Заголовки**:
-     - `Authorization`: `Bearer your_api_key_here`
-   - **Тело запроса**: JSON массив с именами файлов.
+### 5. **Получение документа**
+- **URL**: `GET /documtns/:imageDocs`
+- **Описание**: Получение документа по его имени.
+- **Заголовки**:
+  - `Authorization: Bearer your_api_key_here`
 
-   Пример:
+---
 
-   ```json
-   {
-     "files": ["file1.pdf", "file2.png"]
-   }
-   ```
+### 6. **Загрузка аватара**
+- **URL**: `POST /upload/avatar`
+- **Описание**: Загрузка аватара.
+- **Заголовки**:
+  - `Authorization: Bearer your_api_key_here`
+- **Тело запроса**: `FormData`, содержащий файл.
 
-   Пример:
+---
 
-   ```javascript
-   fetch("http://localhost:3001/documents/remove", {
-     method: "DELETE",
-     headers: {
-       "Content-Type": "application/json",
-       Authorization: "Bearer your_api_key_here",
-     },
-     body: JSON.stringify({ files: ["file1.pdf", "file2.png"] }),
-   })
-     .then((response) => response.json())
-     .then((data) => console.log("Файлы успешно удалены:", data))
-     .catch((error) => console.error("Ошибка при удалении:", error));
-   ```
+### 7. **Удаление документа**
+- **URL**: `DELETE /documtns/remove`
+- **Описание**: Удаляет документы по списку имен файлов.
+- **Заголовки**:
+  - `Authorization: Bearer your_api_key_here`
+- **Тело запроса**: JSON массив с именами файлов.
+  ```json
+  {
+    "files": ["document1.pdf", "document2.pdf"]
+  }
+  ```
 
-3. **Получение файла**
+---
 
-   - **URL**: `GET /files/:fileName`
-   - **Описание**: Позволяет скачать файл по его имени.
+### 8. **Загрузка PDF-файлов**
+- **URL**: `POST /upload/pdfs`
+- **Описание**: Загрузка PDF-файлов.
+- **Заголовки**:
+  - `Authorization: Bearer your_api_key_here`
+- **Тело запроса**: `FormData`, содержащий файл.
 
-   Пример:
+---
 
-   ```javascript
-   fetch("http://localhost:3001/files/example.pdf", {
-     method: "GET",
-     headers: {
-       Authorization: "Bearer your_api_key_here",
-     },
-   })
-     .then((response) => response.blob())
-     .then((blob) => {
-       const url = window.URL.createObjectURL(blob);
-       const a = document.createElement("a");
-       a.style.display = "none";
-       a.href = url;
-       a.download = "example.pdf"; // Имя сохраняемого файла
-       document.body.appendChild(a);
-       a.click();
-       window.URL.revokeObjectURL(url);
-     })
-     .catch((error) => console.error("Ошибка при скачивании:", error));
-   ```
-
+### 9. **Главная страница**
+- **URL**: `GET /`
+- **Описание**: Доступ к главной странице приложения.
+- **Заголовки**:
+  - `Authorization: Bearer your_api_key_here`
 
