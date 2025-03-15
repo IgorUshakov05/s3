@@ -19,7 +19,7 @@
 1. **Клонирование проекта**
 
    ```bash
-   git clone https://github.com/your-repo/s3-file-storage.git
+   git clone https://github.com/igorushakov05/s3.git
    cd s3-file-storage
    ```
 
@@ -136,6 +136,4 @@
      .catch((error) => console.error("Ошибка при скачивании:", error));
    ```
 
----
 
-Теперь вы можете скопировать эту документацию и использовать в своем проекте.
