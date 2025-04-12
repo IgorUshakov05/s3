@@ -10,6 +10,7 @@ const setDocument = require("./routers/Documents/documents");
 const downloadDocs = require("./routers/Documents/documentsGet");
 const removeDocs = require("./routers/Documents/remove");
 const removeAvatarCompany = require("./routers/getIcons/remove");
+const listEndPoing = require("express-list-endpoints");
 const setAvatar = require("./routers/setIcons/avatar");
 const setCompany = require("./routers/setIcons/company");
 const vacancyPreview = require("./routers/preview/vacancy");
@@ -18,9 +19,9 @@ const companyPreview = require("./routers/preview/company");
 app.use(
   cors({
     origin: [
-      "https://webhunt.ru",
+      process.env.MAIN_SERVER,
       "http://localhost:3000",
-      "https://aed0-85-140-163-20.ngrok-free.app",
+      "https://hot-seals-admire.loca.lt",
     ],
     methods: ["GET", "POST", "DELETE", "PUT", "PATCH", "OPTIONS"], // Разрешите все необходимые методы (POST, PUT, DELETE)
   })
@@ -55,7 +56,9 @@ app.get("/", (req, res) => {
 // app.all("*", (req, res) => {
 //   res.redirect("https://webhunt.ru");
 // });
+
 try {
+  console.log(listEndPoing(app));
   app.listen(process.env.PORT, () => {
     console.log(`Сервер запущен на порту ${process.env.PORT}`);
   });

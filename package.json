@@ -13,6 +13,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-list-endpoints": "^7.1.1",
     "html-to-image": "^1.11.11",
     "jimp": "^0.22.12",
     "jsdom": "^25.0.0",
